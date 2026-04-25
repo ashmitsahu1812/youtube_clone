@@ -1,30 +1,22 @@
 import React from 'react';
+import VideoCard from './VideoCard';
 
-export default function VideoGrid({ videos, onVideoSelect }) {
-  if (!videos || videos.length === 0) {
-    return <div className="video-grid-empty">No videos found.</div>;
+export default function VideoGrid(props) {
+  if (!props.videos || props.videos.length === 0) {
+    return <div className="empty-state">No videos found.</div>;
   }
 
   return (
     <div className="video-grid">
-      {videos.map((video) => (
-        <div 
-          key={video.id.videoId} 
-          className="video-card"
-          onClick={() => onVideoSelect(video)}
-          style={{ cursor: 'pointer' }}
-        >
-          <img 
-            src={video.snippet.thumbnails.medium.url} 
-            alt={video.snippet.title} 
-            className="video-thumbnail"
+      {props.videos.map(function(vid, index) {
+        return (
+          <VideoCard 
+            key={index} 
+            video={vid} 
+            onVideoSelect={props.onVideoSelect} 
           />
-          <div className="video-info">
-            <h4 className="video-title">{video.snippet.title}</h4>
-            <p className="video-channel">{video.snippet.channelTitle}</p>
-          </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
